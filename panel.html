@@ -3,83 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Pterodactyl - Taufiq Store</title>
+  <title>Taufiq Store - Panel & SC Bot</title>
   <style>
-    body {margin:0;background:black;font-family:Arial;color:white;padding:40px 20px;}
-    h1 {text-align:center;font-size:36px;margin-bottom:40px;color:#4ade80;}
-    .produk {background:#111;border:2px solid #4ade80;border-radius:14px;padding:25px;margin:20px auto;max-width:500px;text-align:center;}
-    .produk h3 {margin:0 0 10px 0;font-size:24px;color:#4ade80;}
-    .produk p {color:#ccc;margin:10px 0;font-size:15px;}
-    .harga {color:#fff;font-size:30px;font-weight:bold;margin:15px 0;}
-    .btn {display:inline-block;padding:14px 35px;background:#25D366;color:white;text-decoration:none;border-radius:10px;font-weight:bold;font-size:17px;}
-    .back {text-align:center;margin-bottom:30px;}
-    .back a {color:#aaa;text-decoration:none;}
-    .kontak {text-align:center;margin-top:60px;padding-top:30px;border-top:1px solid #333;}
-    html {scroll-behavior: smooth;}
+    body {margin:0;background:#0a0a0a;font-family:Arial;color:white;padding:40px 20px;scroll-behavior:smooth;}
+    h1 {text-align:center;font-size:36px;margin-bottom:10px;color:#4ade80;}
+    p.sub {text-align:center;color:#aaa;margin-bottom:40px;}
+    .menu {text-align:center;margin-bottom:50px;position:sticky;top:0;background:#0a0a0a;padding:15px 0;z-index:10;}
+    .menu a {color:white;background:#222;padding:12px 20px;margin:5px;border-radius:8px;text-decoration:none;display:inline-block;font-weight:bold;font-size:14px;}
+    .menu a:hover {background:#4ade80;color:black;}
+    .section {margin-top:80px;}
+    .section h2 {text-align:center;font-size:30px;margin-bottom:30px;color:#4ade80;}
+    .grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1200px;margin:0 auto;}
+    .card {background:#111;border:2px solid #4ade80;border-radius:14px;padding:25px;text-align:center;transition:0.3s;}
+    .card:hover {transform:translateY(-5px);border-color:#22c55e;}
+    .card h3 {margin:0 0 10px 0;font-size:22px;color:#4ade80;}
+    .card p {color:#ccc;margin:8px 0;font-size:14px;}
+    .harga {color:#fff;font-size:28px;font-weight:bold;margin:15px 0;}
+    .btn {display:inline-block;padding:12px 30px;background:#25D366;color:white;text-decoration:none;border-radius:10px;font-weight:bold;}
+    .btn:hover {background:#1ebe5d;}
+    .unli {border-color:#fbbf24;}
+    .unli h3 {color:#fbbf24;}
   </style>
 </head>
 <body>
-  <div class="back"><a href="index.html">← Kembali ke Home</a></div>
+  <h1>DAFTAR PRODUK TAUFIQ STORE</h1>
+  <p class="sub">Ready 24 Jam | Fast Respon</p>
   
-  <h1>Daftar Harga Panel</h1>
-  
-  <div class="produk">
-    <h3>Panel 2GB</h3>
-    <p>Cocok buat server kecil / bot WA</p>
-    <div class="harga">Rp 5.000</div>
-    <a href="https://wa.me/6287785037018?text=Halo%20bang%20mau%20order%20Panel%202GB" class="btn">Order WA</a>
+  <div class="menu">
+    <a href="#panel">Panel</a>
+    <a href="#titel">Titel Panel</a>
+    <a href="#scbot">SC Bot</a>
   </div>
 
-  <div class="produk">
-    <h3>Panel 4GB</h3>
-    <p>Buat server medium, lebih stabil</p>
-    <div class="harga">Rp 10.000</div>
-    <a href="https://wa.me/6287785037018?text=Halo%20bang%20mau%20order%20Panel%204GB" class="btn">Order WA</a>
-  </div>
-
-  <div class="produk">
-    <h3>Panel 8GB</h3>
-    <p>Server gede, no lag no limit</p>
-    <div class="harga">Rp 18.000</div>
-    <a href="https://wa.me/6287785037018?text=Halo%20bang%20mau%20order%20Panel%208GB" class="btn">Order WA</a>
-  </div>
-
-  <!-- TOMBOL LOMPAT KE BAWAH -->
-  <div style="text-align:center;margin:50px 0;">
-    <a href="#all-titel" class="btn" style="background:#4ade80;color:black;font-size:18px;padding:16px 40px;">Lihat ALL TITEL PANEL PTERODACTYL ↓</a>
-  </div>
-
-  <!-- BAGIAN ALL TITEL DI BAWAH -->
-  <div id="all-titel">
-    <h1 style="margin-top:100px;">ALL TITEL PANEL PTERODACTYL</h1>
-    <p style="text-align:center;color:#aaa;margin-bottom:40px;">Panel Admin + Reseller + Bot Semua Ada</p>
-    
-    <div class="produk">
-      <h3>TITEL ADMIN</h3>
-      <p>Full akses, bisa bikin reseller, unlimited server</p>
-      <div class="harga">Rp 35.000</div>
-      <a href="https://wa.me/6287785037018?text=Halo%20bang%20mau%20order%20TITEL%20ADMIN" class="btn">Order WA</a>
-    </div>
-
-    <div class="produk">
-      <h3>TITEL RESELLER</h3>
-      <p>Bisa jual panel lagi, profit sendiri</p>
-      <div class="harga">Rp 20.000</div>
-      <a href="https://wa.me/6287785037018?text=Halo%20bang%20mau%20order%20TITEL%20RESELLER" class="btn">Order WA</a>
-    </div>
-
-    <div class="produk">
-      <h3>TITEL BOT WA</h3>
-      <p>Panel khusus bot WA, ringan anti lag</p>
-      <div class="harga">Rp 15.000</div>
-      <a href="https://wa.me/6287785037018?text=Halo%20bang%20mau%20order%20TITEL%20BOT%20WA" class="btn">Order WA</a>
+  <!-- 1. HARGA PANEL -->
+  <div id="panel" class="section">
+    <h2>HARGA PANEL PTERO</h2>
+    <div class="grid">
+      <div class="card"><h3>RAM 1GB</h3><p>CPU Unlimited</p><div class="harga">Rp 1.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%201GB" class="btn">Order WA</a></div>
+      <div class="card"><h3>RAM 2GB</h3><p>CPU Unlimited</p><div class="harga">Rp 2.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%202GB" class="btn">Order WA</a></div>
+      <div class="card"><h3>RAM 3GB</h3><p>CPU Unlimited</p><div class="harga">Rp 3.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%203GB" class="btn">Order WA</a></div>
+      <div class="card"><h3>RAM 4GB</h3><p>CPU Unlimited</p><div class="harga">Rp 4.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%204GB" class="btn">Order WA</a></div>
+      <div class="card"><h3>RAM 5GB</h3><p>CPU Unlimited</p><div class="harga">Rp 5.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%205GB" class="btn">Order WA</a></div>
+      <div class="card"><h3>RAM 6GB</h3><p>CPU Unlimited</p><div class="harga">Rp 6.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%206GB" class="btn">Order WA</a></div>
+      <div class="card"><h3>RAM 7GB</h3><p>CPU Unlimited</p><div class="harga">Rp 7.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%207GB" class="btn">Order WA</a></div>
+      <div class="card"><h3>RAM 8GB</h3><p>CPU Unlimited</p><div class="harga">Rp 8.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20RAM%208GB" class="btn">Order WA</a></div>
+      <div class="card unli"><h3>UNLIMITED</h3><p>RAM + CPU Unlimited</p><div class="harga">Rp 5.000</div><a href="https://wa.me/6287785037018?text=Order%20Panel%20UNLIMITED" class="btn">Order WA</a></div>
     </div>
   </div>
 
-  <div class="kontak">
-    <h2>Kontak Penjual</h2>
-    <p>Chat langsung bang, fast respon 24 jam</p>
-    <a href="https://wa.me/6287785037018" class="btn">Chat WhatsApp</a>
+  <!-- 2. TITEL PANEL -->
+  <div id="titel" class="section">
+    <h2>TITEL PANEL PTERODACTYL</h2>
+    <div class="grid">
+      <div class="card"><h3>TITEL ADMIN</h3><p>Full akses admin</p><p>Bisa bikin reseller</p><div class="harga">Rp 35.000</div><a href="https://wa.me/6287785037018?text=Order%20TITEL%20ADMIN" class="btn">Order WA</a></div>
+      <div class="card"><h3>TITEL RESELLER</h3><p>Bisa jual panel</p><p>Profit sendiri</p><div class="harga">Rp 20.000</div><a href="https://wa.me/6287785037018?text=Order%20TITEL%20RESELLER" class="btn">Order WA</a></div>
+      <div class="card"><h3>TITEL BOT WA</h3><p>Panel khusus bot</p><p>Ringan anti lag</p><div class="harga">Rp 15.000</div><a href="https://wa.me/6287785037018?text=Order%20TITEL%20BOT%20WA" class="btn">Order WA</a></div>
+    </div>
   </div>
+
+  <!-- 3. SC BOT -->
+  <div id="scbot" class="section">
+    <h2>SCRIPT BOT WHATSAPP</h2>
+    <div class="grid">
+      <div class="card"><h3>SC BOT V1 SIMPLE</h3><p>Fitur dasar</p><p>Source no enc</p><div class="harga">Rp 15.000</div><a href="https://wa.me/6287785037018?text=Order%20SC%20BOT%20V1" class="btn">Order WA</a></div>
+      <div class="card"><h3>SC BOT V2 FULL</h3><p>Fitur lengkap</p><p>Update + Support</p><div class="harga">Rp 30.000</div><a href="https://wa.me/6287785037018?text=Order%20SC%20BOT%20V2" class="btn">Order WA</a></div>
+      <div class="card"><h3>SC BOT V3 PREMIUM</h3><p>VIP + No delay</p><p>+ Panel gratis</p><div class="harga">Rp 50.000</div><a href="https://wa.me/6287785037018?text=Order%20SC%20BOT%20V3" class="btn">Order WA</a></div>
+    </div>
+  </div>
+
 </body>
 </html>
