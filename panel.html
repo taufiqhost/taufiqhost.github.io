@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar Harga - Taufiq Store</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;overflow-x:hidden}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@keyframes glow{0%,100%{text-shadow:0 0 5px #22c55e,0 0 10px #22c55e}50%{text-shadow:0 0 20px #22c55e,0 0 30px #22c55e}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+header{background:#111;border-bottom:2px solid #22c55e;padding:20px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{font-size:22px;color:#22c55e;font-weight:700;animation:glow 2s infinite}
+.container{max-width:1000px;margin:40px auto;padding:0 20px;position:relative;z-index:1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:40px}
+.stat-box{background:#111;border-radius:12px;padding:20px;text-align:center;border:1px solid #222}
+.stat-box.purple{border-color:#8b5cf6}.stat-box.blue{border-color:#3b82f6}.stat-box.green{border-color:#22c55e}.stat-box.orange{border-color:#f59e0b}
+.stat-num{font-size:32px;font-weight:700;margin-bottom:5px}
+.stat-box.purple .stat-num{color:#8b5cf6}.stat-box.blue .stat-num{color:#3b82f6}.stat-box.green .stat-num{color:#22c55e}.stat-box.orange .stat-num{color:#f59e0b}
+.stat-label{color:#9ca3af;font-size:13px}
+h2{text-align:center;color:#22c55e;margin:40px 0 25px;font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-bottom:40px}
+.card{background:#111;border:1px solid #222;border-radius:15px;padding:30px 25px;text-align:center;transition:0.3s;position:relative}
+.card:hover{border-color:#22c55e;transform:translateY(-5px)}
+.card h3{color:#22c55e;font-size:24px;margin-bottom:15px}
+.price{font-size:36px;color:#22c55e;font-weight:700;margin:20px 0}
+.desc{color:#9ca3af;font-size:14px;margin-bottom:20px;line-height:1.6}
+.btn{padding:14px 30px;background:#22c55e;color:#000;border-radius:8px;text-decoration:none;font-weight:700;display:inline-block;transition:0.3s;font-size:15px}
+.btn:hover{background:#16a34a;transform:scale(1.05)}
+.back{text-align:center;margin-top:40px}
+.back a{color:#22c55e;text-decoration:none;font-weight:600}
+.badge{position:absolute;top:-12px;right:15px;background:#ef4444;color:#fff;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;animation:pulse 1.5s infinite;white-space:nowrap}
+@media(max-width:768px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<header><h1>DAFTAR HARGA LENGKAP</h1></header>
+<div class="container">
+<div class="stats">
+<div class="stat-box purple"><div class="stat-num">500+</div><div class="stat-label">Pelanggan</div></div>
+<div class="stat-box blue"><div class="stat-num">24/7</div><div class="stat-label">Support</div></div>
+<div class="stat-box green"><div class="stat-num">99.9%</div><div class="stat-label">Uptime</div></div>
+<div class="stat-box orange"><div class="stat-num">30 Hari</div><div class="stat-label">Garansi</div></div>
+</div>
+<h2>PANEL PTERODACTYL</h2>
+<div class="grid">
+<div class="card"><h3>1GB</h3><div class="price">Rp1.000</div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+<div class="card"><h3>4GB</h3><div class="price">Rp4.000</div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+<div class="card"><h3>8GB</h3><div class="price">Rp8.000</div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+<div class="card" style="border-color:#ef4444"><div class="badge">🔥 HANYA TERSISA 3 SLOT</div><h3>UNLIMITED</h3><div class="price">Rp5.000</div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+</div>
+<h2>SCRIPT BOT WA</h2>
+<div class="grid">
+<div class="card"><h3>SC Bot V1 Simple</h3><div class="price">Rp15.000</div><div class="desc">Fitur basic, ringan<br>Cocok pemula</div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+<div class="card" style="border-color:#ef4444"><div class="badge">🔥 HANYA TERSISA 3 SLOT</div><h3>SC Bot CPanel Via Tele</h3><div class="price">Rp50.000</div><div class="desc"></div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+</div>
+<h2>TITEL PANEL</h2>
+<div class="grid">
+<div class="card"><h3>TITEL RESELLER</h3><div class="price">Rp3.000</div><div class="desc">Jual panel ke orang<br>Margin gede</div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+<div class="card"><h3>TITEL OWNER</h3><div class="price">Rp15.000</div><div class="desc">Akses full panel<br>Bisa bikin reseller</div><a href="https://wa.me/628xxxxx" class="btn">ORDER SEKARANG</a></div>
+</div>
+<div class="back"><a href="index.html">← Kembali ke Beranda</a></div>
+</div>
+<script>
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2,dx:0.1});
+function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.6;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;p.x+=p.dx;if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
+a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
+</script>
+</body>
+  </html>
