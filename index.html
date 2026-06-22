@@ -7,128 +7,48 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;overflow-x:hidden}
-
-/* PARTIKEL BINTANG JATUH */
-#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.star{position:absolute;background:#22c55e;border-radius:50%;opacity:0;animation:fall linear infinite}
-@keyframes fall{
-0%{opacity:0;transform:translateY(-100px) translateX(0)}
-10%{opacity:1}
-90%{opacity:1}
-100%{opacity:0;transform:translateY(100vh) translateX(100px)}
-}
-
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@keyframes glow{0%,100%{text-shadow:0 0 5px #22c55e,0 0 10px #22c55e}50%{text-shadow:0 0 20px #22c55e,0 0 30px #22c55e}}
 header{background:#111;border-bottom:2px solid #22c55e;padding:20px;text-align:center;position:sticky;top:0;z-index:10}
-header h1{font-size:24px;font-weight:700;letter-spacing:2px;color:#22c55e}
-.glow{animation:glow 2s ease-in-out infinite}
-@keyframes glow{
-0%,100%{text-shadow: 0 0 5px #22c55e, 0 0 10px #22c55e}
-50%{text-shadow: 0 0 20px #22c55e, 0 0 30px #22c55e}
-}
-
+header h1{font-size:24px;font-weight:700;letter-spacing:2px;color:#22c55e;animation:glow 2s infinite}
 .hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;z-index:1}
 .hero h2{font-size:38px;color:#22c55e;margin-bottom:15px;line-height:1.3}
 .hero p{color:#9ca3af;font-size:18px;max-width:600px;margin-bottom:30px;line-height:1.6}
-.btn-utama{padding:15px 35px;background:#22c55e;color:#000;border-radius:10px;text-decoration:none;font-weight:700;font-size:17px;transition:0.3s;display:inline-block}
-.btn-utama:hover{background:#16a34a;transform:scale(1.05);box-shadow:0 0 20px rgba(34,197,94,0.5)}
-
+.btn{padding:15px 35px;background:#22c55e;color:#000;border-radius:10px;text-decoration:none;font-weight:700;font-size:17px;transition:0.3s;display:inline-block;margin:5px}
+.btn:hover{background:#16a34a;transform:scale(1.05);box-shadow:0 0 20px rgba(34,197,94,0.5)}
+.btn-outline{background:#111;color:#22c55e;border:2px solid #22c55e}
+.btn-outline:hover{background:#22c55e;color:#000}
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:60px auto;padding:0 20px;position:relative;z-index:1}
 .feature-box{background:#111;border:1px solid #222;border-radius:15px;padding:30px 20px;text-align:center;transition:0.3s}
 .feature-box:hover{border-color:#22c55e;transform:translateY(-5px)}
 .feature-icon{font-size:50px;margin-bottom:15px}
 .feature-box h3{color:#22c55e;font-size:20px;margin-bottom:10px}
 .feature-box p{color:#9ca3af;font-size:14px;line-height:1.5}
-
 footer{background:#111;border-top:2px solid #22c55e;padding:25px;text-align:center;margin-top:60px;color:#9ca3af;font-size:14px;position:relative;z-index:1}
 footer a{color:#22c55e;text-decoration:none;font-weight:600}
-
-@media(max-width:768px){
-.hero h2{font-size:28px}
-.features{grid-template-columns:1fr}
+@media(max-width:768px){.hero h2{font-size:28px}.features{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<!-- PARTIKEL BINTANG -->
 <canvas id="stars"></canvas>
-
-<header>
-<h1 class="glow">TAUFIQ STORE</h1>
-</header>
-
+<header><h1>TAUFIQ STORE</h1></header>
 <div class="hero">
 <h2>Panel Pterodactyl & SC Bot WA<br>Terpercaya No.1</h2>
 <p>Mulai dari Rp1.000 aja bang. Server stabil, garansi 30 hari, support 24 jam. Udah dipercaya 500+ pelanggan</p>
-<a href="panel.html" class="btn-utama">LIHAT DAFTAR HARGA →</a>
+<a href="panel.html" class="btn">LIHAT DAFTAR HARGA →</a>
+<a href="about.html" class="btn btn-outline">📞 KONTAK ADMIN</a>
 </div>
-
 <div class="features">
-<div class="feature-box">
-<div class="feature-icon">⚡</div>
-<h3>Proses Instan</h3>
-<p>Order sekarang, panel langsung jadi. Gak pake nunggu lama</p>
+<div class="feature-box"><div class="feature-icon">⚡</div><h3>Proses Instan</h3><p>Order sekarang, panel langsung jadi. Gak pake nunggu lama</p></div>
+<div class="feature-box"><div class="feature-icon">🔒</div><h3>100% Aman</h3><p>Original no backdoor. Data kamu aman, server anti lag</p></div>
+<div class="feature-box"><div class="feature-icon">💬</div><h3>Support 24 Jam</h3><p>Ada kendala? Chat admin langsung respon. Garansi full</p></div>
 </div>
-
-<div class="feature-box">
-<div class="feature-icon">🔒</div>
-<h3>100% Aman</h3>
-<p>Original no backdoor. Data kamu aman, server anti lag</p>
-</div>
-
-<div class="feature-box">
-<div class="feature-icon">💬</div>
-<h3>Support 24 Jam</h3>
-<p>Ada kendala? Chat admin langsung respon. Garansi full</p>
-</div>
-</div>
-
-<footer>
-<p>© 2026 Taufiq Store. All Rights Reserved</p>
-<p>Testimoni: <a href="https://t.me/alltestimonibytaufiqoffc" target="_blank">Klik Disini</a></p>
-</footer>
-
+<footer><p>© 2026 Taufiq Store. All Rights Reserved</p><p>Testimoni: <a href="https://t.me/alltestimonibytaufiqoffc" target="_blank">Klik Disini</a></p></footer>
 <script>
-// EFEK PARTIKEL BINTANG JATUH
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let stars = [];
-for(let i=0; i<80; i++){
-stars.push({
-x: Math.random() * canvas.width,
-y: Math.random() * canvas.height,
-radius: Math.random() * 2 + 1,
-speed: Math.random() * 0.5 + 0.2,
-opacity: Math.random()
-});
-}
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle = '#22c55e';
-stars.forEach(star => {
-ctx.globalAlpha = star.opacity;
-ctx.beginPath();
-ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-ctx.fill();
-star.y += star.speed;
-star.x += 0.1;
-if(star.y > canvas.height){
-star.y = -10;
-star.x = Math.random() * canvas.width;
-}
-});
-requestAnimationFrame(animate);
-}
-animate();
-
-window.addEventListener('resize', () => {
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-});
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2,dx:0.1});
+function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.6;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;p.x+=p.dx;if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
+a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
 </script>
-
 </body>
 </html>
