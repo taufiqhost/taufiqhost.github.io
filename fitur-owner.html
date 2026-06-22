@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halaman 4 - Locked</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@keyframes glow{0%,100%{text-shadow:0 0 10px #22c55e}50%{text-shadow:0 0 20px #22c55e}}
+
+.lock-box{background:#111;border:2px solid #22c55e;border-radius:15px;padding:40px;max-width:420px;width:100%;position:relative;z-index:1;box-shadow:0 0 30px rgba(34,197,94,0.3);text-align:center}
+.lock-icon{font-size:60px;margin-bottom:20px}
+h1{color:#22c55e;font-size:24px;margin-bottom:10px;animation:glow 2s infinite}
+p{color:#9ca3af;margin-bottom:25px;font-size:14px}
+input{width:100%;padding:12px;background:#1a1a1a;border:2px solid #333;border-radius:8px;color:#e5e7eb;margin-bottom:15px;font-size:15px}
+input:focus{border-color:#22c55e;outline:none}
+.btn{width:100%;padding:12px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);color:#000;border:none;border-radius:8px;font-weight:800;font-size:16px;cursor:pointer;transition:0.3s}
+.btn:hover{transform:scale(1.03)}
+.error{color:#ef4444;text-align:center;margin-top:10px;font-size:13px;display:none}
+
+.hidden{display:none}
+.container{max-width:600px;margin:0 auto;padding:20px;position:relative;z-index:1}
+.box{background:#111;border:2px solid #22c55e;border-radius:15px;padding:25px;margin-bottom:20px}
+h2{color:#22c55e;font-size:20px;margin-bottom:15px}
+.logout-btn{position:absolute;top:15px;right:15px;background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
+.btn-back{margin-top:20px;text-align:center}
+.btn-back a{color:#22c55e;text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<!-- HALAMAN KUNCI -->
+<div class="lock-box" id="lockBox">
+<div class="lock-icon">🔒</div>
+<h1>HALAMAN TERKUNCI</h1>
+<p>Masukkan Username & Password untuk mengakses Halaman 4</p>
+<input type="text" id="user" placeholder="Username" autocomplete="off">
+<input type="password" id="pass" placeholder="Password">
+<button class="btn" onclick="bukaKunci()">BUKA AKSES</button>
+<div class="error" id="errMsg">Username atau Password salah!</div>
+</div>
+
+<!-- ISI HALAMAN 4 - MUNCUL SETELAH LOGIN -->
+<div class="container hidden" id="halaman4">
+<button class="logout-btn" onclick="logout()">Logout</button>
+
+<div class="box">
+<h2>🔐 HALAMAN 4 - AREA RAHASIA</h2>
+<p style="margin-bottom:15px;color:#d1d5db">Selamat datang Admin! Ini adalah halaman 4 yang terkunci.</p>
+<p style="color:#9ca3af;font-size:14px">Lu bisa isi halaman ini dengan data rahasia, setting khusus, atau apapun yg ga mau customer liat.</p>
+
+<h2 style="margin-top:25px">Contoh Isi Halaman:</h2>
+<ul style="list-style:none;padding-left:0">
+<li style="margin-bottom:10px">✓ Kode API Panel</li>
+<li style="margin-bottom:10px">✓ Harga modal</li>
+<li style="margin-bottom:10px">✓ Data customer VIP</li>
+<li style="margin-bottom:10px">✓ Setting rahasia lainnya</li>
+</ul>
+</div>
+
+<div class="btn-back">
+<a href="about.html">← Kembali ke About</a>
+</div>
+</div>
+
+<script>
+// USERNAME: admin | PASSWORD: admin123
+const LOGIN = {
+  user: 'admin',
+  pass: 'admin123'
+};
+
+function bukaKunci(){
+  let u = document.getElementById('user').value;
+  let p = document.getElementById('pass').value;
+  let err = document.getElementById('errMsg');
+  
+  if(u === LOGIN.user && p === LOGIN.pass){
+    localStorage.setItem('halaman4_buka', 'true');
+    document.getElementById('lockBox').classList.add('hidden');
+    document.getElementById('halaman4').classList.remove('hidden');
+    err.style.display = 'none';
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+// Cek auto login
+window.onload = function(){
+  if(localStorage.getItem('halaman4_buka') === 'true'){
+    document.getElementById('lockBox').classList.add('hidden');
+    document.getElementById('halaman4').classList.remove('hidden');
+  }
+}
+
+function logout(){
+  localStorage.removeItem('halaman4_buka');
+  document.getElementById('halaman4').classList.add('hidden');
+  document.getElementById('lockBox').classList.remove('hidden');
+  document.getElementById('user').value = '';
+  document.getElementById('pass').value = '';
+}
+
+document.getElementById('pass').addEventListener('keypress', e => {
+  if(e.key === 'Enter') bukaKunci();
+});
+
+// Bintang jatuh
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<50;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2,dx:Math.random()*0.3-0.15});
+function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;p.x+=p.dx;if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
+a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
+</script>
+</body>
+</html>
