@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;padding:15px}
+.container{max-width:700px;margin:0 auto}
+h1{color:#22c55e;text-align:center;margin-bottom:20px;font-size:22px}
+.login-box,.admin-box{background:#111;border:2px solid #22c55e;border-radius:12px;padding:20px;margin-bottom:15px}
+input,select{width:100%;padding:10px;background:#1a1a1a;border:2px solid #333;border-radius:8px;color:#e5e7eb;margin-bottom:12px;font-size:14px}
+input:focus,select:focus{border-color:#22c55e;outline:none}
+.btn{padding:10px 20px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);color:#000;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;width:100%;transition:0.3s}
+.btn:hover{transform:scale(1.03)}
+.btn-danger{background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:#fff;margin-top:8px}
+.btn-small{padding:5px 10px;font-size:11px;width:auto;margin-right:4px}
+table{width:100%;border-collapse:collapse;margin-top:15px;font-size:13px}
+th,td{padding:8px;text-align:left;border-bottom:1px solid #333}
+th{background:#1a1a1a;color:#22c55e;font-size:12px}
+tr:hover{background:#1a1a1a}
+.badge{padding:3px 6px;border-radius:5px;font-size:10px;font-weight:700}
+.badge-ya{background:#ef4444;color:#fff}
+.badge-tidak{background:#666;color:#fff}
+.hidden{display:none}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr}table{font-size:11px}th,td{padding:6px}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🔐 ADMIN PANEL</h1>
+
+<div class="login-box" id="loginBox">
+<h2 style="color:#22c55e;margin-bottom:15px;text-align:center;font-size:18px">Login Admin</h2>
+<input type="password" id="passInput" placeholder="Masukkan Password">
+<button class="btn" onclick="login()">MASUK</button>
+<p style="text-align:center;color:#666;margin-top:12px;font-size:12px">Password: taufiq123</p>
+</div>
+
+<div class="admin-box hidden" id="adminBox">
+<h2 style="color:#22c55e;margin-bottom:15px;font-size:16px">⚙️ Setting Toko</h2>
+<div class="grid-2">
+<input type="text" id="namaToko" placeholder="Nama Toko">
+<input type="text" id="noWa" placeholder="No WA 62xxx">
+</div>
+<button class="btn" onclick="saveSetting()">SIMPAN SETTING</button>
+
+<hr style="margin:20px 0;border-color:#333">
+
+<h2 style="color:#22c55e;margin-bottom:15px;font-size:16px">📦 Tambah Produk</h2>
+<div class="grid-2">
+<input type="text" id="namaProduk" placeholder="Nama: RAM 4GB">
+<input type="number" id="hargaProduk" placeholder="Harga: 4000">
+<select id="kategoriProduk">
+<option value="panel">Panel</option>
+<option value="titel">Titel</option>
+<option value="scbot">SC Bot</option>
+</select>
+<select id="badgeProduk">
+<option value="tidak">Badge: Tidak</option>
+<option value="ya">Badge: Ya</option>
+</select>
+</div>
+<button class="btn" onclick="tambahProduk()">TAMBAH</button>
+
+<h2 style="color:#22c55e;margin:20px 0 12px 0;font-size:16px">📋 Produk</h2>
+<table>
+<thead>
+<tr><th>Nama</th><th>Harga</th><th>Kat</th><th>Badge</th><th>Aksi</th></tr>
+</thead>
+<tbody id="listProduk"></tbody>
+</table>
+
+<h2 style="color:#22c55e;margin:20px 0 12px 0;font-size:16px">📥 Pesanan</h2>
+<table>
+<thead>
+<tr><th>Waktu</th><th>Produk</th><th>Total</th></tr>
+</thead>
+<tbody id="listPesanan"></tbody>
+</table>
+
+<button class="btn btn-danger" onclick="logout()">LOGOUT</button>
+</div>
+</div>
+
+<script>
+// PASSWORD ADMIN = taufiq123
+const ADMIN_PASS = 'taufiq123';
+
+let produkList = JSON.parse(localStorage.getItem('produkList')) || [];
+let setting = JSON.parse(localStorage.getItem('tokoSetting')) || {namaToko:'Panel', noWa:'6287785037018'};
+
+function login(){
+  let pass = document.getElementById('passInput').value;
+  if(pass === ADMIN_PASS){
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('adminBox').classList.remove('hidden');
+    loadSetting();
+    loadProdukTable();
+    loadPesanan();
+  } else {
+    alert('Password salah bang!');
+  }
+}
+
+function logout(){
+  document.getElementById('loginBox').classList.remove('hidden');
+  document.getElementById('adminBox').classList.add('hidden');
+  document.getElementById('passInput').value = '';
+}
+
+function loadSetting(){
+  document.getElementById('namaToko').value = setting.namaToko;
+  document.getElementById('noWa').value = setting.noWa;
+}
+
+function saveSetting(){
+  setting.namaToko = document.getElementById('namaToko').value;
+  setting.noWa = document.getElementById('noWa').value;
+  localStorage.setItem('tokoSetting', JSON.stringify(setting));
+  alert('Tersimpan! Refresh panel.html');
+}
+
+function tambahProduk(){
+  let nama = document.getElementById('namaProduk').value;
+  let harga = document.getElementById('hargaProduk').value;
+  let kategori = document.getElementById('kategoriProduk').value;
+  let badge = document.getElementById('badgeProduk').value;
+  
+  if(!nama || !harga){
+    alert('Nama & harga wajib!');
+    return;
+  }
+  
+  let id = Date.now();
+  produkList.push({id, nama, harga: Number(harga), kategori, badge});
+  localStorage.setItem('produkList', JSON.stringify(produkList));
+  
+  document.getElementById('namaProduk').value = '';
+  document.getElementById('hargaProduk').value = '';
+  loadProdukTable();
+  alert('Produk ditambah!');
+}
+
+function hapusProduk(id){
+  if(confirm('Hapus produk?')){
+    produkList = produkList.filter(p => p.id !== id);
+    localStorage.setItem('produkList', JSON.stringify(produkList));
+    loadProdukTable();
+  }
+}
+
+function loadProdukTable(){
+  let html = '';
+  produkList.forEach(p => {
+    html += `<tr>
+      <td>${p.nama}</td>
+      <td>Rp${Number(p.harga).toLocaleString('id-ID')}</td>
+      <td>${p.kategori}</td>
+      <td><span class="badge badge-${p.badge}">${p.badge.toUpperCase()}</span></td>
+      <td><button class="btn btn-small btn-danger" onclick="hapusProduk(${p.id})">Hapus</button></td>
+    </tr>`;
+  });
+  document.getElementById('listProduk').innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:#666">Kosong</td></tr>';
+}
+
+function loadPesanan(){
+  let pesanan = JSON.parse(localStorage.getItem('pesananList')) || [];
+  let html = '';
+  pesanan.slice().reverse().forEach(p => {
+    let items = p.items.map(i => i.name).join(', ');
+    let waktu = new Date(p.waktu).toLocaleString('id-ID');
+    html += `<tr>
+      <td>${waktu}</td>
+      <td>${items}</td>
+      <td>Rp${Number(p.total).toLocaleString('id-ID')}</td>
+    </tr>`;
+  });
+  document.getElementById('listPesanan').innerHTML = html || '<tr><td colspan="3" style="text-align:center;color:#666">Belum ada</td></tr>';
+}
+
+document.getElementById('passInput').addEventListener('keypress', e => {
+  if(e.key === 'Enter') login();
+});
+</script>
+</body>
+  </html>
