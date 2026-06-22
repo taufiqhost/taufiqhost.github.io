@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taufiq Store - Panel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;overflow-x:hidden}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@keyframes glow{0%,100%{text-shadow:0 0 5px #22c55e,0 0 10px #22c55e}50%{text-shadow:0 0 20px #22c55e,0 0 30px #22c55e}}
+@keyframes cart-bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes confetti-fall{0%{transform:translateY(-100vh) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes ripple{0%{transform:scale(0);opacity:1}100%{transform:scale(4);opacity:0}}
+
+header{background:#111;border-bottom:2px solid #22c55e;padding:20px 10px;text-align:center;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(10px)}
+header h1{font-size:22px;font-weight:700;letter-spacing:2px;color:#22c55e;animation:glow 2s infinite;flex:1}
+
+/* KERANJANG DIKECILIN */
+.cart-btn{position:relative;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);color:#000;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;border:none;font-size:20px;transition:0.3s;box-shadow:0 4px 12px rgba(34,197,94,0.3);overflow:hidden}
+.cart-btn:hover{transform:scale(1.05)}
+.cart-count{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700;border:1.5px solid #fff}
+
+.container{max-width:800px;margin:0 auto;padding:30px 20px;position:relative;z-index:1}
+h2{color:#22c55e;font-size:28px;margin-bottom:15px;text-align:center;animation:fadeInUp 0.6s}
+.desc{text-align:center;color:#9ca3af;margin-bottom:30px;line-height:1.6;animation:fadeInUp 0.8s}
+
+.feature{display:flex;gap:15px;background:linear-gradient(135deg,#111 0%,#1a1a1a 100%);padding:18px;border-radius:12px;margin-bottom:15px;border:1px solid #222;animation:fadeInUp 1s;transition:0.3s}
+.feature:hover{transform:translateX(8px);border-color:#22c55e}
+.feature-icon{width:50px;height:50px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;transition:0.4s}
+.feature:hover .feature-icon{transform:rotate(360deg) scale(1.15)}
+
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin:40px 0}
+.stat-card{background:linear-gradient(135deg,#111 0%,#1a1a1a 100%);padding:25px 15px;border-radius:12px;text-align:center;border:1px solid #222;cursor:pointer;transition:0.4s;text-decoration:none;display:block;animation:fadeInUp 1.2s;animation:float 4s ease-in-out infinite}
+.stat-card:hover{transform:translateY(-10px) scale(1.05);animation:none}
+.stat-icon{font-size:40px;margin-bottom:8px;transition:0.3s}
+.stat-card:hover .stat-icon{transform:scale(1.3) rotate(15deg)}
+.stat-num{font-size:32px;font-weight:bold;margin-bottom:5px}
+.stat-label{color:#9ca3af;font-size:14px}
+
+.all-produk-title{color:#22c55e;font-size:24px;font-weight:700;text-align:center;margin:50px 0 20px 0;letter-spacing:1px;animation:fadeInUp 1.4s}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px;animation:fadeInUp 1.6s}
+.menu-btn{background:linear-gradient(135deg,#111 0%,#1a1a 100%);border-radius:12px;padding:18px 10px;text-align:center;text-decoration:none;color:#22c55e;font-weight:700;font-size:15px;border:2px solid #22c55e;transition:0.3s}
+.menu-btn:hover{color:#000;transform:translateY(-5px)}
+
+.section{margin-top:50px}
+.product-card{background:linear-gradient(135deg,#111 0%,#1a1a1a 100%);border-radius:12px;padding:20px;margin-bottom:15px;border:1px solid #222;display:flex;justify-content:space-between;align-items:flex-start;gap:15px;animation:fadeInUp 0.5s;transition:0.4s;position:relative;overflow:hidden;animation:float 6s ease-in-out infinite}
+.product-card:hover{border-color:#22c55e;transform:translateY(-5px) scale(1.02);animation:none}
+.product-name{font-weight:600;font-size:16px;color:#f3f4f6}
+.product-price{color:#22c55e;font-weight:bold;font-size:18px;margin-right:10px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.btn-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{padding:8px 18px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap;cursor:pointer;border:none;transition:0.3s;position:relative;overflow:hidden}
+.btn:hover{transform:scale(1.08)}
+.btn-cart{background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%);color:#fff}
+
+.unli .product-name,.unli .product-price{color:#fbbf24}
+.unli{border-color:#ef4444 !important;animation:float 6s ease-in-out infinite, glow 2s infinite}
+
+/* BADGE SISA 3 SLOT */
+.badge{position:absolute;top:-10px;right:12px;background:#ef4444;color:#fff;padding:4px 10px;border-radius:15px;font-size:10px;font-weight:700;animation:cart-bounce 2s infinite;white-space:nowrap;z-index:2}
+
+/* CONFETTI */
+.confetti{position:fixed;width:8px;height:8px;background:#22c55e;position:absolute;z-index:999;animation:confetti-fall 3s linear forwards}
+
+/* RIPPLE EFFECT */
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.6);transform:scale(0);animation:ripple 0.6s linear}
+
+.contact-btn{text-align:center;margin:40px 0;animation:fadeInUp 2s}
+.contact-btn a{padding:12px 30px;background:linear-gradient(135deg,#111 0%,#1a1a1a 100%);color:#22c55e;border:2px solid #22c55e;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s;display:inline-block}
+.contact-btn a:hover{background:#22c55e;color:#000;transform:scale(1.08)}
+
+footer{background:#111;border-top:2px solid #22c55e;padding:25px 20px;text-align:center;margin-top:50px;color:#9ca3af;font-size:14px;position:relative;z-index:1}
+footer a{color:#22c55e;text-decoration:none;font-weight:600}
+
+/* MODAL KERANJANG */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.modal.active{display:flex;animation:fadeInUp 0.3s}
+.modal-content{background:linear-gradient(135deg,#111 0%,#1a1a1a 100%);border:2px solid #22c55e;border-radius:15px;padding:25px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-header h3{color:#22c55e;font-size:22px}
+.close-btn{background:none;border:none;color:#ef4444;font-size:28px;cursor:pointer;font-weight:700;transition:0.3s}
+.close-btn:hover{transform:rotate(180deg)}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #222;gap:10px;animation:fadeInUp 0.3s}
+.cart-item-name{flex:1;color:#e5e7eb;font-size:14px}
+.cart-item-price{color:#22c55e;font-weight:700}
+.remove-btn{background:#ef4444;color:#fff;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;transition:0.3s}
+.remove-btn:hover{background:#dc2626}
+.cart-total{margin-top:20px;padding-top:15px;border-top:2px solid #22c55e;text-align:right;font-size:20px;color:#22c55e;font-weight:700}
+.checkout-btn{width:100%;margin-top:15px;padding:14px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);color:#000;border:none;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer;transition:0.3s}
+.checkout-btn:hover{transform:scale(1.03)}
+
+@media(max-width:600px){.menu-grid{grid-template-columns:1fr;gap:10px}.menu-btn{font-size:14px;padding:15px 10px}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<header>
+<h1>TAUFIQ STORE</h1>
+<button class="cart-btn" onclick="openCart()">🛒<span class="cart-count" id="cartCount">0</span></button>
+</header>
+
+<div class="container">
+<h2>Tentang Taufiq Store</h2>
+<p class="desc">Taufiq Store adalah platform terpercaya untuk jual beli Panel Pterodactyl & Script Bot WA di Indonesia. Melayani ribuan user dengan garansi server stabil dan support 24 jam.</p>
+<div class="feature"><div class="feature-icon">🔒</div><div><h3>100% Aman</h3><p>Semua transaksi dijamin aman, proses cepat dan terpercaya</p></div></div>
+<div class="feature"><div class="feature-icon">✅</div><div><h3>Server Original</h3><p>Panel & SC Bot original, no backdoor, full akses</p></div></div>
+<div class="feature"><div class="feature-icon">🎯</div><div><h3>Harga Terjangkau</h3><p>Mulai dari Rp1.000, cocok buat pemula sampe sultan</p></div></div>
+<div class="stats">
+<a href="https://t.me/alltestimonibytaufiqoffc" target="_blank" class="stat-card stat-1"><div class="stat-icon">👥</div><div class="stat-num">500+</div><div class="stat-label">Pelanggan Puas</div></a>
+<a href="https://t.me/alltestimonibytaufiqoffc" target="_blank" class="stat-card stat-2"><div class="stat-icon">📦</div><div class="stat-num">1000+</div><div class="stat-label">Panel Terjual</div></a>
+<a href="#scbot" class="stat-card stat-3"><div class="stat-icon">🚀</div><div class="stat-num">3+</div><div class="stat-label">Produk Tersedia</div></a>
+<a href="https://t.me/alltestimonibytaufiqoffc" target="_blank" class="stat-card stat-4"><div class="stat-icon">⭐</div><div class="stat-num">99%</div><div class="stat-label">Tingkat Kepuasan</div></a>
+</div>
+<h3 class="all-produk-title">ALL PRODUK TAUFIQ STORE</h3>
+<div class="menu-grid">
+<a href="#panel" class="menu-btn">📦 Panel</a>
+<a href="#titel" class="menu-btn">👑 Titel Panel</a>
+<a href="#scbot" class="menu-btn">🤖 SC Bot</a>
+</div>
+<div id="panel" class="section"><h2>HARGA PANEL</h2>
+<div class="product-card"><span class="product-name">RAM 1GB Unlimited</span><div class="btn-group"><span class="product-price">Rp1.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 1GB Unlimited', 1000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%201GB" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">RAM 2GB Unlimited</span><div class="btn-group"><span class="product-price">Rp2.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 2GB Unlimited', 2000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%202GB" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">RAM 3GB Unlimited</span><div class="btn-group"><span class="product-price">Rp3.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 3GB Unlimited', 3000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%203GB" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">RAM 4GB Unlimited</span><div class="btn-group"><span class="product-price">Rp4.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 4GB Unlimited', 4000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%204GB" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">RAM 5GB Unlimited</span><div class="btn-group"><span class="product-price">Rp5.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 5GB Unlimited', 5000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%205GB" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">RAM 6GB Unlimited</span><div class="btn-group"><span class="product-price">Rp6.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 6GB Unlimited', 6000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%206GB" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">RAM 7GB Unlimited</span><div class="btn-group"><span class="product-price">Rp7.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 7GB Unlimited', 7000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%207GB" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">RAM 8GB Unlimited</span><div class="btn-group"><span class="product-price">Rp8.000</span><button class="btn btn-cart" onclick="addToCart(event,'RAM 8GB Unlimited', 8000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20RAM%208GB" class="btn">Order</a></div></div>
+<div class="product-card unli"><div class="badge">🔥 HANYA TERSISA 3 SLOT</div><span class="product-name">UNLIMITED</span><div class="btn-group"><span class="product-price">Rp5.000</span><button class="btn btn-cart" onclick="addToCart(event,'UNLIMITED', 5000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20UNLIMITED" class="btn">Order</a></div></div>
+</div>
+<div id="titel" class="section"><h2>TITEL PANEL</h2>
+<div class="product-card"><div><span class="product-name">TITEL DEV</span><p style="color:#9ca3af;font-size:12px;margin-top:5px;line-height:1.4">- Bisa Open Reseller Panel<br>- Bisa Open All Titel Panel Kecuali Dev<br>- Bisa Open Admin Panel<br>- Bisa Open Panel</p></div><div class="btn-group"><span class="product-price">Rp20.000</span><button class="btn btn-cart" onclick="addToCart(event,'TITEL DEV', 20000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20TITEL%20DEV" class="btn">Order</a></div></div>
+<div class="product-card"><div><span class="product-name">TITEL OWNER</span><p style="color:#9ca3af;font-size:12px;margin-top:5px;line-height:1.4">- Bisa Open Reseller Panel<br>- Bisa Open Titel Panel Kecuali Dev & Owner<br>- Bisa Jual Panel<br>- Bisa Jual Admin Panel</p></div><div class="btn-group"><span class="product-price">Rp15.000</span><button class="btn btn-cart" onclick="addToCart(event,'TITEL OWNER', 15000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20TITEL%20OWNER" class="btn">Order</a></div></div>
+<div class="product-card"><div><span class="product-name">TITEL PATNER</span><p style="color:#9ca3af;font-size:12px;margin-top:5px;line-height:1.4">- Bisa Open Reseller Panel<br>- Bisa Open Panel<br>- Bisa Open Admin Panel<br>- Bisa Buat Panel Sepuasnya</p></div><div class="btn-group"><span class="product-price">Rp10.000</span><button class="btn btn-cart" onclick="addToCart(event,'TITEL PATNER', 10000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20TITEL%20PATNER" class="btn">Order</a></div></div>
+<div class="product-card"><div><span class="product-name">TITEL ADMIN</span><p style="color:#9ca3af;font-size:12px;margin-top:5px;line-height:1.4">- Bisa Open Reseller - Gabisa ambil PTLA & PTLC<br>- Bisa Jual Panel<br>- Bisa Buat Panel Sepuasnya<br>- Bisa Open Jasa Run</p></div><div class="btn-group"><span class="product-price">Rp7.000</span><button class="btn btn-cart" onclick="addToCart(event,'TITEL ADMIN', 7000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20TITEL%20ADMIN" class="btn">Order</a></div></div>
+<div class="product-card"><div><span class="product-name">TITEL RESELLER</span><p style="color:#9ca3af;font-size:12px;margin-top:5px;line-height:1.4">- Bisa Buat Panel Sepuasnya<br>- Bisa Jual Panel<br>- Bisa Open Jasa Run<br>- Bisa Run Bot</p></div><div class="btn-group"><span class="product-price">Rp3.000</span><button class="btn btn-cart" onclick="addToCart(event,'TITEL RESELLER', 3000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20TITEL%20RESELLER" class="btn">Order</a></div></div>
+</div>
+<div id="scbot" class="section"><h2>SC BOT WHATSAPP</h2>
+<div class="product-card"><span class="product-name">SC BOT V1 SIMPLE</span><div class="btn-group"><span class="product-price">Rp15.000</span><button class="btn btn-cart" onclick="addToCart(event,'SC BOT V1 SIMPLE', 15000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20V1" class="btn">Order</a></div></div>
+<div class="product-card"><span class="product-name">SC BOT V2 FULL</span><div class="btn-group"><span class="product-price">Rp30.000</span><button class="btn btn-cart" onclick="addToCart(event,'SC BOT V2 FULL', 30000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20V2" class="btn">Order</a></div></div>
+<div class="product-card" style="border-color:#ef4444"><div class="badge">🔥 HANYA TERSISA 3 SLOT</div><span class="product-name">SC BOT V3 PREMIUM</span><div class="btn-group"><span class="product-price">Rp50.000</span><button class="btn btn-cart" onclick="addToCart(event,'SC BOT V3 PREMIUM', 50000)">+ Keranjang</button><a href="https://wa.me/6287785037018?text=Order%20V3" class="btn">Order</a></div></div>
+</div>
+<div class="contact-btn"><a href="about.html">📞 INFO LENGKAP ADMIN</a></div>
+</div>
+<footer><p>© 2026 Taufiq Store. All Rights Reserved</p><p>Lihat <a href="https://t.me/alltestimonibytaufiqoffc" target="_blank">Testimoni Pembeli</a> | Support 24 Jam</p></footer>
+
+<!-- MODAL KERANJANG -->
+<div class="modal" id="cartModal">
+<div class="modal-content">
+<div class="modal-header">
+<h3>🛒 Keranjang Belanja</h3>
+<button class="close-btn" onclick="closeCart()">×</button>
+</div>
+<div id="cartItems"></div>
+<div class="cart-total" id="cartTotal">Total: Rp0</div>
+<button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
+</div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function createConfetti(x, y){
+  for(let i=0;i<12;i++){
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = x + 'px';
+    confetti.style.top = y + 'px';
+    confetti.style.background = ['#22c55e','#3b82f6','#f59e0b','#8b5cf6','#ef4444'][Math.floor(Math.random()*5)];
+    confetti.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(confetti);
+    setTimeout(()=>confetti.remove(), 3000);
+  }
+}
+
+function createRipple(e){
+  const btn = e.currentTarget;
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = e.clientX - rect.left - size/2 + 'px';
+  ripple.style.top = e.clientY - rect.top - size/2 + 'px';
+  btn.appendChild(ripple);
+  setTimeout(()=>ripple.remove(), 600);
+}
+
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click', createRipple);
+});
+
+function addToCart(e,name, price){
+  createConfetti(e.clientX, e.clientY);
+  cart.push({name, price});
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  document.querySelector('.cart-btn').style.animation = 'cart-bounce 0.5s';
+  setTimeout(()=>document.querySelector('.cart-btn').style.animation = '', 500);
+}
+
+function updateCartCount(){
+  document.getElementById('cartCount').textContent = cart.length;
+}
+
+function openCart(){
+  document.getElementById('cartModal').classList.add('active');
+  renderCart();
+}
+
+function closeCart(){
+  document.getElementById('cartModal').classList.remove('active');
+}
+
+function renderCart(){
+  const cartItems = document.getElementById('cartItems');
+  if(cart.length === 0){
+    cartItems.innerHTML = '<div class="empty-cart">Keranjang kosong 😅<br>Yuk tambah produk dulu!</div>';
+    document.getElementById('cartTotal').textContent = 'Total: Rp0';
+    return;
+  }
+  
+  let html = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    html += `<div class="cart-item">
+      <span class="cart-item-name">${item.name}</span>
+      <span class="cart-item-price">Rp${item.price.toLocaleString('id-ID')}</span>
+      <button class="remove-btn" onclick="removeFromCart(${index})">Hapus</button>
+    </div>`;
+    total += item.price;
+  });
+  cartItems.innerHTML = html;
+  document.getElementById('cartTotal').textContent = `Total: Rp${total.toLocaleString('id-ID')}`;
+}
+
+function removeFromCart(index){
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  renderCart();
+}
+
+function checkout(){
+  if(cart.length === 0){
+    alert('Keranjang masih kosong bang!');
+    return;
+  }
+  
+  let message = 'Halo Taufiq Store, saya mau order:\n\n';
+  let total = 0;
+  cart.forEach(item => {
+    message += `- ${item.name} : Rp${item.price.toLocaleString('id-ID')}\n`;
+    total += item.price;
+  });
+  message += `\nTotal: Rp${total.toLocaleString('id-ID')}`;
+  
+  window.open(`https://wa.me/6287785037018?text=${encodeURIComponent(message)}`, '_blank');
+  cart = [];
+  localStorage.removeItem('cart');
+  updateCartCount();
+  closeCart();
+}
+
+updateCartCount();
+
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2,dx:Math.random()*0.3-0.15,speed:Math.random()*0.5+0.5});
+function a(){
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='#22c55e';
+  s.forEach(p=>{
+    ctx.globalAlpha=0.6;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y+=p.dy*p.speed;
+    p.x+=p.dx*p.speed;
+    if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}
+    if(p.x<0||p.x>c.width){p.dx*=-1}
+  });
+  requestAnimationFrame(a)
+}
+a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
+</script>
+</body>
+                                                             </html>
