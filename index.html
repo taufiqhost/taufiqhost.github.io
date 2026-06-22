@@ -40,6 +40,12 @@ footer a{color:#22c55e;text-decoration:none;font-weight:600}
 <body>
 <canvas id="stars"></canvas>
 <header><h1>TAUFIQ STORE</h1></header>
+
+<!-- COUNTER PENGUNJUNG LIVE -->
+<div style="background:#0a0a0a;border-bottom:1px solid #222;padding:10px;text-align:center;font-size:13px;color:#9ca3af">
+🔥 <span id="visitor" style="color:#22c55e;font-weight:700">89</span> orang lagi liat web ini sekarang
+</div>
+
 <div class="hero">
 <h2>Panel Pterodactyl & SC Bot WA<br>Terpercaya No.1</h2>
 <p>Mulai dari Rp1.000 aja bang. Server stabil, garansi 30 hari, support 24 jam. Udah dipercaya 500+ pelanggan</p>
@@ -66,23 +72,21 @@ let s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.
 function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.6;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;p.x+=p.dx;if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
 a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
 
+// Counter Pengunjung Live
+let visitor = 89;
+setInterval(()=>{
+visitor += Math.floor(Math.random()*5)-2;
+if(visitor < 50) visitor = 50;
+if(visitor > 200) visitor = 200;
+document.getElementById('visitor').textContent = visitor;
+}, 3000);
+
 // Popup Testimoni
 const nama = ["Budi","Siti","Rizki","Ayu","Dani","Rina","Fajar","Maya","Agus","Dewi","Andi","Lia"];
 const kota = ["Jakarta","Bandung","Surabaya","Medan","Makassar","Semarang","Yogyakarta","Palembang","Bekasi","Tangerang","Bogor","Depok"];
-const produk = [
-"Panel 1GB Unlimited - Rp1.000",
-"Panel 4GB Unlimited - Rp4.000", 
-"Panel 8GB Unlimited - Rp8.000",
-"UNLIMITED - Rp5.000",
-"SC Bot V1 Simple - Rp15.000",
-"SC Bot V3 Premium - Rp50.000",
-"TITEL OWNER - Rp15.000",
-"TITEL RESELLER - Rp3.000"
-];
-
+const produk = ["Panel 1GB Unlimited - Rp1.000","Panel 4GB Unlimited - Rp4.000","Panel 8GB Unlimited - Rp8.000","UNLIMITED - Rp5.000","SC Bot V1 Simple - Rp15.000","SC Bot V3 Premium - Rp50.000","TITEL OWNER - Rp15.000","TITEL RESELLER - Rp3.000"];
 function randomItem(arr){return arr[Math.floor(Math.random()*arr.length)]}
 function randomMenit(){return Math.floor(Math.random()*15)+1}
-
 function showNotif(){
 const teks = `${randomItem(nama)} dari ${randomItem(kota)} baru saja beli <b>${randomItem(produk)}</b><br>${randomMenit()} menit yang lalu`;
 document.getElementById('notif-text').innerHTML = teks;
@@ -90,8 +94,6 @@ const popup = document.getElementById('notif');
 popup.classList.add('show');
 setTimeout(()=>{popup.classList.remove('show')}, 4000);
 }
-
-// Muncul pertama 3 detik, terus tiap 8-12 detik
 setTimeout(showNotif, 3000);
 setInterval(showNotif, Math.random()*4000+8000);
 </script>
