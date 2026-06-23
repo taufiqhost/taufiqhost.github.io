@@ -216,12 +216,12 @@ function checkoutWA(){
   if(cart.length === 0){alert('Keranjang kosong bang!');return}
   let msg = 'Halo bang, saya mau beli:%0A';
   cart.forEach(p=>{msg += `- ${p.nama} x${p.qty || 1} = Rp ${(parseInt(p.harga) * (p.qty || 1)).toLocaleString('id-ID')}%0A`});
-  let wa = '628123456789'; // ganti nomor WA lu disini
+  let wa = '6287785037018'; // ganti nomor WA lu disini
   window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
 }
 
 function beliProduk(nama){
-  let wa = '628123456789';
+  let wa = '6287785037018';
   let msg = encodeURIComponent(`Halo bang, saya mau beli produk: ${nama}`);
   window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
 }
