@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taufiq Store - Jual Panel & SC Bot WA</title>
+
+<script>
+if(!localStorage.getItem('userLogin')){
+  window.location.replace('daftar.html');
+}
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;overflow-x:hidden;padding-bottom:70px}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@keyframes glow{0%,100%{text-shadow:0 0 5px #22c55e,0 0 10px #22c55e}50%{text-shadow:0 0 20px #22c55e,0 0 30px #22c55e}}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+header{background:#111;border-bottom:2px solid #22c55e;padding:20px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{font-size:24px;font-weight:700;letter-spacing:2px;color:#22c55e;animation:glow 2s infinite}
+
+/* BARU: LIVE PENGGUNA */
+.live-users{margin-top:8px;font-size:12px;color:#9ca3af;display:flex;align-items:center;justify-content:center;gap:6px}
+.live-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite}
+.live-users b{color:#22c55e;font-weight:700}
+
+.hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative;z-index:1}
+.hero h2{font-size:38px;color:#22c55e;margin-bottom:15px;line-height:1.3}
+.hero p{color:#9ca3af;font-size:18px;max-width:600px;margin-bottom:30px;line-height:1.6}
+.btn{padding:15px 35px;background:#22c55e;color:#000;border-radius:10px;text-decoration:none;font-weight:700;font-size:17px;transition:0.3s;display:inline-block;margin:5px;border:none;cursor:pointer}
+.btn:hover{background:#16a34a;transform:scale(1.05);box-shadow:0 0 20px rgba(34,197,94,0.5)}
+
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:60px auto;padding:0 20px;position:relative;z-index:1}
+.feature-box{background:#111;border:1px solid #222;border-radius:15px;padding:30px 20px;text-align:center;transition:0.3s}
+.feature-box:hover{border-color:#22c55e;transform:translateY(-5px)}
+.feature-icon{font-size:50px;margin-bottom:15px}
+.feature-box h3{color:#22c55e;font-size:20px;margin-bottom:10px}
+.feature-box p{color:#9ca3af;font-size:14px;line-height:1.5}
+
+footer{background:#111;border-top:2px solid #22c55e;padding:25px;text-align:center;margin-top:60px;color:#9ca3af;font-size:14px;position:relative;z-index:1}
+
+/* NAVBAR BAWAH 6 MENU */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #22c55e;display:flex;justify-content:space-around;z-index:9999;padding:6px 0}
+.nav-item{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#9ca3af;font-size:10px;transition:0.3s;flex:1;cursor:pointer}
+.nav-item.active{color:#22c55e;font-weight:700}
+.nav-item:hover{color:#22c55e;transform:translateY(-2px)}
+.nav-icon{font-size:20px;margin-bottom:2px}
+
+/* MODAL KUNCI AKSES OWNER */
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;z-index:10000;animation:fadeIn 0.3s}
+.modal.show{display:flex}
+.modal-box{background:#111;border:3px solid #22c55e;border-radius:15px;padding:30px;max-width:350px;width:90%;text-align:center;box-shadow:0 0 40px rgba(34,197,94,0.4)}
+.modal-box h3{color:#22c55e;margin-bottom:10px;font-size:22px;font-weight:900}
+.modal-box p{color:#9ca3af;font-size:13px;margin-bottom:15px}
+.modal-box input{width:100%;padding:14px;background:#0a0a0a;border:2px solid #333;border-radius:8px;color:#e5e7eb;margin:8px 0;font-size:15px}
+.modal-box input:focus{border-color:#22c55e;outline:none;box-shadow:0 0 15px rgba(34,197,94,0.4)}
+.modal-btn{width:100%;padding:14px;background:#22c55e;color:#000;border:none;border-radius:8px;font-weight:900;font-size:16px;cursor:pointer;margin-top:10px;transition:0.2s}
+.modal-btn:hover{background:#16a34a}
+.close-btn{background:#333;color:#e5e7eb;margin-top:8px}
+.close-btn:hover{background:#444}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<header>
+<h1>TAUFIQ STORE</h1>
+<!-- BARU: LIVE PENGGUNA -->
+<div class="live-users"><span class="live-dot"></span><b id="liveCount">89</b> pengguna lagi menggunakan website</div>
+</header>
+
+<div class="hero">
+<h2>Jual Panel & SC Bot WhatsApp</h2>
+<p>Harga termurah, garansi amanah, proses cepat 24 jam</p>
+<a href="panel.html" class="btn">Lihat Produk</a>
+</div>
+
+<div class="features">
+<div class="feature-box">
+<div class="feature-icon">⚡</div>
+<h3>Proses Cepat</h3>
+<p>Panel & SC langsung jadi, ga pake lama</p>
+</div>
+<div class="feature-box">
+<div class="feature-icon">🛡️</div>
+<h3>Garansi Amanah</h3>
+<p>Udah dipercaya ratusan customer</p>
+</div>
+<div class="feature-box">
+<div class="feature-icon">💰</div>
+<h3>Harga Murah</h3>
+<p>Mulai dari 1k aja udah bisa punya panel</p>
+</div>
+</div>
+
+<footer>
+© 2026 Taufiq Store. All rights reserved.
+</footer>
+
+<!-- MODAL KUNCI AKSES OWNER -->
+<div class="modal" id="ownerModal">
+<div class="modal-box">
+<h3>🔒 KUNCI AKSES OWNER</h3>
+<p>Masukkan Username & Password</p>
+<input type="text" id="ownerUser" placeholder="Username" autocomplete="username">
+<input type="password" id="ownerPass" placeholder="Password" autocomplete="current-password">
+<button class="modal-btn" onclick="cekOwner()">BUKA PANEL</button>
+<button class="modal-btn close-btn" onclick="tutupModal()">BATAL</button>
+</div>
+</div>
+
+<!-- NAVBAR BAWAH 6 MENU - OWNER 👑 AKUN 👤 -->
+<nav class="bottom-nav">
+<a href="index.html" class="nav-item active">
+<div class="nav-icon">🏠</div>
+<span>Beranda</span>
+</a>
+<a href="panel.html" class="nav-item">
+<div class="nav-icon">📦</div>
+<span>Produk</span>
+</a>
+<a href="tentang.html" class="nav-item">
+<div class="nav-icon">ℹ️</div>
+<span>Tentang</span>
+</a>
+<a href="reting.html" class="nav-item">
+<div class="nav-icon">⭐</div>
+<span>Rating</span>
+</a>
+<div onclick="bukaOwner()" class="nav-item">
+<div class="nav-icon">👑</div>
+<span>Owner</span>
+</div>
+<a href="#" onclick="tampilAkun()" class="nav-item">
+<div class="nav-icon">👤</div>
+<span>Akun</span>
+</a>
+</nav>
+
+<script>
+let user = JSON.parse(localStorage.getItem('userLogin'));
+
+// BARU: ANGKA LIVE RANDOM 20-80 BIAR KELIATAN REAL
+function updateLive(){
+  let num = Math.floor(Math.random() * 61) + 20;
+  document.getElementById('liveCount').textContent = num;
+}
+updateLive();
+setInterval(updateLive, 5000);
+
+// KLIK LOGO 👑 LANGSUNG MUNCUL MODAL KUNCI
+function bukaOwner(){
+  document.getElementById('ownerModal').classList.add('show');
+  document.getElementById('ownerUser').value = '';
+  document.getElementById('ownerPass').value = '';
+  document.getElementById('ownerUser').focus();
+}
+
+function tutupModal(){
+  document.getElementById('ownerModal').classList.remove('show');
+}
+
+// CEK USERNAME PASSWORD OWNER - ALERT UDAH AMAN
+function cekOwner(){
+  let username = document.getElementById('ownerUser').value.trim();
+  let pass = document.getElementById('ownerPass').value.trim();
+  
+  if(username === 'taufiq' && pass === 'taufiq09'){
+    localStorage.setItem('ownerLogin', 'true');
+    tutupModal();
+    alert('✅ Akses dibuka! Selamat datang Owner 👑');
+    window.location.href = 'owner.html';
+  } else {
+    alert('❌ Username atau Password salah! Coba lagi bang');
+    document.getElementById('ownerPass').value = '';
+    document.getElementById('ownerPass').focus();
+  }
+}
+
+// Enter buat submit
+document.getElementById('ownerPass').addEventListener('keypress', e => {
+  if(e.key === 'Enter') cekOwner();
+});
+
+function tampilAkun(){
+  alert(`👤 DATA AKUN KAMU\nNama: ${user.nama}\nWhatsApp: ${user.wa}\nRole: ${user.role}`);
+}
+
+// BINTANG JATUH IJO
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<80;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2,dx:0.1});
+function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.6;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;p.x+=p.dx;if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
+a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
+</script>
+</body>
+</html>
