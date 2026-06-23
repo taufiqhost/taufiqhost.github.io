@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Owner - Taufiq Store</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;padding-bottom:70px}
+header{background:#111;border-bottom:2px solid #22c55e;padding:20px;text-align:center}
+header h1{color:#22c55e;font-size:24px;font-weight:900}
+.box{background:#111;border:2px solid #22c55e;border-radius:15px;padding:25px;margin:20px;max-width:600px;margin-left:auto;margin-right:auto}
+.box h2{color:#22c55e;margin-bottom:15px}
+.btn{padding:12px 25px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:15px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #22c55e;display:flex;justify-content:space-around;padding:6px 0}
+.nav-item{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#9ca3af;font-size:10px;flex:1}
+.nav-item.active{color:#22c55e;font-weight:700}
+.nav-icon{font-size:20px;margin-bottom:2px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>👑 DASHBOARD OWNER</h1>
+</header>
+
+<div class="box">
+<h2>Selamat Datang Owner!</h2>
+<p>Ini panel admin Taufiq Store.<br>
+Disini lu bisa kelola produk, user, dan pesanan.</p>
+<button class="btn" onclick="logoutOwner()">KELUAR PANEL</button>
+</div>
+
+<!-- NAVBAR BAWAH - OWNER 👑 AKUN 👤 -->
+<nav class="bottom-nav">
+<a href="index.html" class="nav-item"><div class="nav-icon">🏠</div><span>Beranda</span></a>
+<a href="panel.html" class="nav-item"><div class="nav-icon">📦</div><span>Produk</span></a>
+<a href="tentang.html" class="nav-item"><div class="nav-icon">ℹ️</div><span>Tentang</span></a>
+<a href="reting.html" class="nav-item"><div class="nav-icon">⭐</div><span>Rating</span></a>
+<a href="owner.html" class="nav-item active"><div class="nav-icon">👑</div><span>Owner</span></a>
+<a href="#" onclick="logoutOwner()" class="nav-item"><div class="nav-icon">👤</div><span>Akun</span></a>
+</nav>
+
+<script>
+// CEK CUMA ownerLogin, GA CEK ROLE LAGI
+if(localStorage.getItem('ownerLogin') !== 'true'){
+  alert('Silakan login owner dulu!');
+  window.location.href = 'index.html';
+}
+
+function logoutOwner(){
+  localStorage.removeItem('ownerLogin');
+  alert('Logout berhasil!');
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
