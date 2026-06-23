@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar - Taufiq Store</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@keyframes glow{0%,100%{text-shadow:0 0 10px #22c55e}50%{text-shadow:0 0 20px #22c55e}}
+
+.box{background:#111;border:2px solid #22c55e;border-radius:15px;padding:30px;text-align:center;max-width:400px;width:100%}
+h1{color:#22c55e;margin-bottom:15px;font-size:24px;animation:glow 2s infinite}
+.bonus{background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);color:#000;border-radius:10px;padding:10px;margin-bottom:20px;font-weight:800}
+input{width:100%;padding:14px;background:#1a1a1a;border:2px solid #333;border-radius:10px;color:#e5e7eb;margin-bottom:12px;font-size:15px}
+input:focus{border-color:#22c55e;outline:none}
+.btn{width:100%;padding:14px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);color:#000;border:none;border-radius:10px;font-weight:800;font-size:17px;cursor:pointer}
+.btn:hover{transform:scale(1.03)}
+.link{margin-top:15px;font-size:13px;color:#9ca3af}
+.link a{color:#22c55e;font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="box">
+<h1>DAFTAR DULU BANG!</h1>
+<div class="bonus">🎁 BONUS 5% MEMBER BARU</div>
+
+<input type="text" id="nama" placeholder="Nama / Username">
+<input type="password" id="pass" placeholder="Password min 6 karakter">
+<input type="tel" id="wa" placeholder="Nomor WhatsApp 08xxx">
+
+<button class="btn" onclick="daftar()">DAFTAR & MASUK</button>
+
+<div class="link">Udah daftar? <a href="login.html">Login disini</a></div>
+</div>
+
+<script>
+function daftar(){
+  let nama = document.getElementById('nama').value.trim();
+  let pass = document.getElementById('pass').value.trim();
+  let wa = document.getElementById('wa').value.trim();
+  
+  if(!nama || !pass || !wa){alert('Isi semua kolom!');return;}
+  if(pass.length < 6){alert('Password min 6 karakter!');return;}
+  
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+  if(users.find(u => u.nama.toLowerCase() === nama.toLowerCase())){
+    alert('Username udah dipake!');return;
+  }
+  
+  let user = {nama: nama, pass: pass, wa: wa};
+  users.push(user);
+  localStorage.setItem('users', JSON.stringify(users));
+  localStorage.setItem('userLogin', JSON.stringify(user));
+  
+  alert('Berhasil daftar! Selamat datang ' + nama);
+  window.location.href = 'index.html';
+}
+
+// BINTANG
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<50;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2});
+function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;if(p.y>c.height){p.y=0;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
+a();
+</script>
+</body>
+</html>
