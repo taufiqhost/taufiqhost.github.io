@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tentang Kami - Taufiq Store</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;padding:15px;padding-bottom:80px}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+@keyframes glow{0%,100%{text-shadow:0 0 10px #22c55e}50%{text-shadow:0 0 20px #22c55e}}
+
+.container{max-width:600px;margin:0 auto;position:relative;z-index:1}
+h1{color:#22c55e;text-align:center;margin-bottom:20px;font-size:24px;animation:glow 2s infinite}
+
+.about-box{background:#111;border:2px solid #22c55e;border-radius:12px;padding:20px;margin-bottom:15px}
+.about-box h2{color:#22c55e;margin-bottom:15px;font-size:18px;text-align:center}
+
+.btn-big{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%);color:#000;text-decoration:none;padding:15px;border-radius:12px;margin-bottom:10px;font-weight:800;font-size:16px;transition:0.3s}
+.btn-big:hover{transform:scale(1.02)}
+.btn-big .icon{font-size:28px}
+
+.btn-wa{background:linear-gradient(135deg,#25D366 0%,#1ebe57 100%)}
+.btn-tele{background:linear-gradient(135deg,#0088cc 0%,#006699 100%);color:#fff}
+.btn-tt{background:linear-gradient(135deg,#000 0%,#333 100%);color:#fff}
+.btn-ig{background:linear-gradient(135deg,#E1306C 0%,#C13584 100%);color:#fff}
+.btn-testi{background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%)}
+.btn-info{background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%);color:#fff}
+.btn-channel{background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 100%);color:#fff}
+
+.rating-btn{display:block;background:#fbbf24;color:#000;text-align:center;padding:15px;border-radius:12px;text-decoration:none;font-weight:800;font-size:18px;margin:20px 0;transition:0.3s}
+.rating-btn:hover{transform:scale(1.03)}
+
+.nav-bottom{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #22c55e;display:flex;justify-content:space-around;padding:10px 0;z-index:999}
+.nav-item{color:#9ca3af;text-decoration:none;font-size:11px;text-align:center;flex:1}
+.nav-item.active{color:#22c55e;font-weight:700}
+.nav-icon{font-size:20px;display:block;margin-bottom:3px}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="container">
+<h1>ℹ️ ALL INFORMATION TENTANG TAUFIQ STORE</h1>
+
+<div class="about-box">
+<h2>👋 SELAMAT DATANG</h2>
+<p style="text-align:center;color:#d1d5db;line-height:1.6;margin-bottom:20px">
+Taufiq Store penyedia Panel Pterodactyl, Titel, SC Bot WA terpercaya sejak 2024. 
+Support 24 jam & garansi setiap produk! Kepuasan customer prioritas utama.
+</p>
+
+<!-- TOMBOL RATING BUAT CUSTOMER - LINK UDAH BENER -->
+<a href="./reting.html" class="rating-btn">⭐ KLIK DISINI UNTUK KASIH RATING 1-5 BINTANG</a>
+</div>
+
+<div class="about-box">
+<h2>📞 HUBUNGI KAMI - TINGGAL KLIK</h2>
+
+<a href="https://wa.me/6287785037018" target="_blank" class="btn-big btn-wa">
+<span class="icon">💬</span>
+<div>NOMOR WHATSAPP<br><span style="font-size:12px;font-weight:400">6287785037018</span></div>
+</a>
+
+<a href="https://t.me/TAUFIQ_HOSTING" target="_blank" class="btn-big btn-tele">
+<span class="icon">✈️</span>
+<div>USERNAME TELEGRAM<br><span style="font-size:12px;font-weight:400">@TAUFIQ_HOSTING</span></div>
+</a>
+
+<a href="https://tiktok.com/@taufiqsaid__09" target="_blank" class="btn-big btn-tt">
+<span class="icon">🎵</span>
+<div>USERNAME TIKTOK<br><span style="font-size:12px;font-weight:400">@taufiqsaid__09</span></div>
+</a>
+
+<a href="https://instagram.com/taufiqoffcial" target="_blank" class="btn-big btn-ig">
+<span class="icon">📸</span>
+<div>USERNAME INSTAGRAM<br><span style="font-size:12px;font-weight:400">@taufiqoffcial</span></div>
+</a>
+</div>
+
+<div class="about-box">
+<h2>🔗 LINK PENTING</h2>
+
+<a href="https://t.me/alltestimonibytaufiqoffc" target="_blank" class="btn-big btn-testi">
+<span class="icon">💯</span>
+<div>ALL TESTIMONI<br><span style="font-size:12px;font-weight:400">Lihat bukti transfer asli</span></div>
+</a>
+
+<a href="https://t.me/infoinfoajah" target="_blank" class="btn-big btn-info">
+<span class="icon">📢</span>
+<div>ALL INFORMASI<br><span style="font-size:12px;font-weight:400">Info update & promo</span></div>
+</a>
+
+<a href="https://t.me/TaufiqOffc2026" target="_blank" class="btn-big btn-channel">
+<span class="icon">📡</span>
+<div>CHANNEL TAUFIQ<br><span style="font-size:12px;font-weight:400">@TaufiqOffc2026</span></div>
+</a>
+</div>
+
+<div class="about-box" style="text-align:center">
+<h2>📍 LOKASI</h2>
+<p style="color:#d1d5db">Telukdalam, Nias Selatan<br>Sumatera Utara</p>
+<p style="color:#9ca3af;font-size:12px;margin-top:5px">Jam operasional: 08:00 - 23:00 WIB</p>
+</div>
+</div>
+
+<!-- NAVIGASI BAWAH -->
+<div class="nav-bottom">
+<a href="index.html" class="nav-item">
+<span class="nav-icon">🏠</span>
+Beranda
+</a>
+<a href="panel.html" class="nav-item">
+<span class="nav-icon">📦</span>
+Produk
+</a>
+<a href="about.html" class="nav-item active">
+<span class="nav-icon">ℹ️</span>
+Tentang
+</a>
+</div>
+
+<script>
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<50;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2,dx:Math.random()*0.3-0.15});
+function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;p.x+=p.dx;if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
+a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
+</script>
+</body>
+  </html>
