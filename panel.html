@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produk - Taufiq Store</title>
+
+<script>
+if(!localStorage.getItem('userLogin')){
+  window.location.replace('daftar.html');
+}
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;padding:20px;padding-bottom:90px}
+header{background:#111;border-bottom:2px solid #22c55e;padding:20px;text-align:center;position:sticky;top:0;z-index:10;margin:-20px -20px 20px -20px}
+header h1{font-size:24px;font-weight:700;color:#22c55e}
+
+.grid-produk{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:#111;border:2px solid #222;border-radius:12px;overflow:hidden;transition:0.3s}
+.card:hover{border-color:#22c55e;transform:translateY(-3px)}
+.card img{width:100%;height:140px;object-fit:cover;background:#1a1a1a}
+.card-body{padding:12px}
+.card h3{color:#22c55e;font-size:14px;margin-bottom:5px;height:36px;overflow:hidden}
+.card p{color:#9ca3af;font-size:12px;height:32px;overflow:hidden;margin-bottom:8px}
+.harga{color:#ef4444;font-size:16px;font-weight:900;margin-bottom:8px}
+.btn-beli{width:100%;padding:8px;background:#22c55e;color:#000;border:none;border-radius:6px;font-weight:700;font-size:12px;cursor:pointer}
+.btn-beli:hover{background:#16a34a}
+
+.empty{color:#9ca3af;text-align:center;padding:50px 20px;font-size:14px;grid-column:1/3}
+
+/* NAVBAR BAWAH 6 MENU */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #22c55e;display:flex;justify-content:space-around;z-index:9999;padding:6px 0}
+.nav-item{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#9ca3af;font-size:10px;flex:1}
+.nav-item.active{color:#22c55e}
+.nav-icon{font-size:20px;margin-bottom:2px}
+
+@media(min-width:600px){.grid-produk{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<header><h1>📦 PRODUK TAUFIQ STORE</h1></header>
+
+<div class="grid-produk" id="listProduk">
+<p class="empty">Loading produk...</p>
+</div>
+
+<nav class="bottom-nav">
+<a href="index.html" class="nav-item">
+<div class="nav-icon">🏠</div>
+<span>Beranda</span>
+</a>
+<a href="panel.html" class="nav-item active">
+<div class="nav-icon">📦</div>
+<span>Produk</span>
+</a>
+<a href="about.html" class="nav-item">
+<div class="nav-icon">ℹ️</div>
+<span>Tentang</span>
+</a>
+<a href="reting.html" class="nav-item">
+<div class="nav-icon">⭐</div>
+<span>Rating</span>
+</a>
+<a href="#" onclick="showAkun()" class="nav-item">
+<div class="nav-icon">👤</div>
+<span>Akun</span>
+</a>
+<a href="#" onclick="alert('Login owner lewat beranda bang 👑')" class="nav-item">
+<div class="nav-icon">👑</div>
+<span>Owner</span>
+</a>
+</nav>
+
+<script>
+let user = JSON.parse(localStorage.getItem('userLogin'));
+function showAkun(){
+  alert(`👤 DATA AKUN KAMU\nNama: ${user.nama}\nWhatsApp: ${user.wa}`);
+}
+
+// LOAD PRODUK DARI OWNER + GAMBAR OPSIONAL
+let produk = JSON.parse(localStorage.getItem('produkOwner')) || [];
+let html = '';
+
+if(produk.length === 0){
+  html = `<div class="empty">Belum ada produk bang 😅<br>Buka panel owner dulu buat tambah produk</div>`;
+} else {
+  produk.reverse().forEach(p => {
+    let harga = p.nama.match(/Rp[\d.]+/)? p.nama.match(/Rp[\d.]+/)[0] : 'Harga';
+    let imgUrl = p.gambar && p.gambar.trim()!== ''
+     ? p.gambar
+      : `https://via.placeholder.com/300x200/1a1a1a/22c55e?text=Panel`;
+
+    html += `<div class="card">
+      <img src="${imgUrl}" alt="${p.nama}" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/22c55e?text=No+Image'">
+      <div class="card-body">
+        <h3>${p.nama}</h3>
+        <p>${p.desk || 'Tanpa deskripsi'}</p>
+        <div class="harga">${harga}</div>
+        <button class="btn-beli" onclick="order('${p.nama}')">BELI SEKARANG</button>
+      </div>
+    </div>`;
+  });
+}
+document.getElementById('listProduk').innerHTML = html;
+
+function order(namaProduk){
+  let msg = `Halo bang Taufiq, saya ${user.nama} mau order ${namaProduk}`;
+  window.open(`https://wa.me/6287785037018?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
+</body>
+  </html>
