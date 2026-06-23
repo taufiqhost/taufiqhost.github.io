@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rating - Taufiq Store</title>
+<script>
+if(!localStorage.getItem('userLogin')){
+  window.location.replace('daftar.html');
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;padding:20px;padding-bottom:90px;overflow-x:hidden}
+canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
+header{background:#111;border-bottom:2px solid #22c55e;padding:20px;text-align:center;position:sticky;top:0;z-index:10;margin:-20px -20px 30px -20px}
+header h1{font-size:24px;font-weight:700;color:#22c55e}
+.box{background:#111;border:2px solid #333;border-radius:15px;padding:20px;margin-bottom:20px}
+.box h2{color:#22c55e;font-size:18px;margin-bottom:15px}
+.hidden{display:none !important}
+
+.rating{display:flex;justify-content:center;gap:12px;margin:15px 0 10px 0;font-size:50px;cursor:pointer}
+.star{color:#333;transition:0.2s;user-select:none}
+.star:hover{transform:scale(1.2);color:#22c55e}
+.star.active{color:#fbbf24}
+
+.label-rating{color:#9ca3af;font-size:13px;text-align:center;margin-bottom:15px}
+
+input,textarea{width:100%;padding:12px;background:#0a0a0a;border:2px solid #333;border-radius:8px;color:#e5e7eb;margin-bottom:10px;font-size:14px}
+input:focus,textarea:focus{border-color:#22c55e;outline:none}
+.btn{width:100%;padding:12px;background:#22c55e;color:#000;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;margin-top:5px}
+.btn:hover{background:#16a34a}
+.btn.danger{background:#ef4444;color:#fff}
+.btn.danger:hover{background:#dc2626}
+.btn.kecil{padding:6px 10px;font-size:12px;width:auto}
+
+.stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.stat-card{background:#0a0a0a;border:2px solid #333;border-radius:8px;padding:10px;text-align:center}
+.stat-card .num{font-size:24px;font-weight:900;color:#22c55e}
+.stat-card .label{font-size:11px;color:#9ca3af}
+
+.review-item{background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:12px;margin-bottom:8px;position:relative}
+.review-item.top{border-color:#22c55e;background:#1a1a1a}
+.review-stars{color:#fbbf24;font-size:16px;margin-bottom:5px}
+.review-text{color:#d1d5db;font-size:13px;margin-bottom:5px}
+.review-date{color:#666;font-size:11px}
+
+/* BALASAN OWNER */
+.balasan-owner{background:#0f1f0f;border-left:3px solid #22c55e;padding:8px 10px;margin-top:8px;border-radius:5px}
+.balasan-owner b{color:#22c55e;font-size:12px}
+.balasan-owner p{color:#d1d5db;font-size:12px;margin-top:3px}
+
+.reply-box{margin-top:8px;display:none}
+.reply-box textarea{margin-bottom:5px;font-size:12px;padding:8px}
+
+/* NAVBAR BAWAH 6 MENU */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #22c55e;display:flex;justify-content:space-around;z-index:9999;padding:6px 0}
+.nav-item{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#9ca3af;font-size:10px;flex:1}
+.nav-item.active{color:#22c55e}
+.nav-icon{font-size:20px;margin-bottom:2px}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<header><h1>⭐ RATING & TESTIMONI</h1></header>
+
+<!-- FORM CUSTOMER - BINTANG DI ATAS -->
+<div id="formCustomer" class="box">
+<h2>📝 Beri Penilaian Kamu</h2>
+
+<div class="rating" id="starRating">
+<span class="star" data-rate="1">★</span>
+<span class="star" data-rate="2">★</span>
+<span class="star" data-rate="3">★</span>
+<span class="star" data-rate="4">★</span>
+<span class="star" data-rate="5">★</span>
+</div>
+<div class="label-rating">Tap bintang untuk rating</div>
+
+<input type="text" id="namaUser" placeholder="Username kamu..." maxlength="20">
+<textarea id="komentar" placeholder="Komentar / Saran kamu..." rows="3"></textarea>
+<button class="btn" onclick="kirimRating()">Kirim Rating</button>
+</div>
+
+<!-- PANEL OWNER -->
+<div id="panelOwner" class="hidden">
+<div class="box">
+<h2>👑 Panel Owner - Statistik Rating</h2>
+<div class="stat-grid" id="statGrid"></div>
+</div>
+
+<div class="box">
+<h2>💬 Semua Ulasan + Balas</h2>
+<button class="btn danger" onclick="hapusSemuaRating()">🗑️ Hapus Semua Rating</button>
+<div id="listUlasanOwner" style="margin-top:15px"></div>
+</div>
+</div>
+
+<div class="box">
+<h2>📊 Rating Terbaru</h2>
+<div id="hasilRating">Loading...</div>
+</div>
+
+<!-- NAVBAR BAWAH 6 MENU -->
+<nav class="bottom-nav">
+<a href="index.html" class="nav-item">
+<div class="nav-icon">🏠</div>
+<span>Beranda</span>
+</a>
+<a href="panel.html" class="nav-item">
+<div class="nav-icon">📦</div>
+<span>Produk</span>
+</a>
+<a href="tentang.html" class="nav-item">
+<div class="nav-icon">ℹ️</div>
+<span>Tentang</span>
+</a>
+<a href="reting.html" class="nav-item active">
+<div class="nav-icon">⭐</div>
+<span>Rating</span>
+</a>
+<a href="#" onclick="tampilAkun()" class="nav-item">
+<div class="nav-icon">👤</div>
+<span>Akun</span>
+</a>
+<a href="#" onclick="loginOwnerLewatBeranda()" class="nav-item">
+<div class="nav-icon">👑</div>
+<span>Owner</span>
+</a>
+</nav>
+
+<script>
+let user = JSON.parse(localStorage.getItem('userLogin'));
+let bintangPilih = 0;
+
+// KUNCI OWNER
+if(user.role === 'owner' && localStorage.getItem('ownerLogin') === 'true'){
+  document.getElementById('formCustomer').classList.add('hidden');
+  document.getElementById('panelOwner').classList.remove('hidden');
+  loadStatistikOwner();
+} else if(user.role === 'owner' && localStorage.getItem('ownerLogin') !== 'true'){
+  alert('Login owner lewat beranda bang👑');
+  window.location.replace('index.html');
+}
+
+function loginOwnerLewatBeranda(){
+  alert('Login owner lewat beranda bang👑');
+}
+
+// Pilih bintang hitam jadi kuning
+document.querySelectorAll('.star').forEach(s=>{
+  s.onclick = function(){
+    bintangPilih = parseInt(this.dataset.rate);
+    document.querySelectorAll('.star').forEach(x=>{
+      x.classList.toggle('active', parseInt(x.dataset.rate) <= bintangPilih);
+    });
+  }
+});
+
+function kirimRating(){
+  if(bintangPilih === 0) return alert('Pilih bintang dulu bang!');
+  let nama = document.getElementById('namaUser').value.trim();
+  if(!nama) nama = user.nama;
+  let komentar = document.getElementById('komentar').value;
+  
+  let ratings = JSON.parse(localStorage.getItem('ratings')) || [];
+  ratings.push({
+    id: Date.now(),
+    nama: nama,
+    wa: user.wa,
+    bintang: bintangPilih,
+    komentar: komentar,
+    balasan: '',
+    waktu: new Date().toISOString()
+  });
+  localStorage.setItem('ratings', JSON.stringify(ratings));
+  
+  document.getElementById('namaUser').value = '';
+  document.getElementById('komentar').value = '';
+  bintangPilih = 0;
+  document.querySelectorAll('.star').forEach(x=>x.classList.remove('active'));
+  
+  alert('Terimakasih Atas Penilaiannya 🙏🏻\nJika Ada Yang Kurang Nyamannya Mohon Maaf\nTim Kami Akan Menindak Lanjuti\nTerima Kasih Atas Saran Serta Masukan 😊');
+  
+  updateHasilRating();
+  if(user.role === 'owner') loadStatistikOwner();
+}
+
+function updateHasilRating(){
+  let ratings = JSON.parse(localStorage.getItem('ratings')) || [];
+  if(ratings.length === 0){
+    document.getElementById('hasilRating').innerHTML = '<p style="color:#666;text-align:center">Belum ada rating</p>';
+    return;
+  }
+  let html = '';
+  ratings.slice(-5).reverse().forEach(r=>{
+    let stars = '⭐'.repeat(r.bintang);
+    let balasanHtml = r.balasan ? `<div class="balasan-owner"><b>👑 Balasan Owner:</b><p>${r.balasan}</p></div>` : '';
+    html += `<div class="review-item">
+      <div class="review-stars">${stars}</div>
+      <div class="review-text"><b>${r.nama}:</b> ${r.komentar || '-'}</div>
+      ${balasanHtml}
+    </div>`;
+  });
+  document.getElementById('hasilRating').innerHTML = html;
+}
+
+function loadStatistikOwner(){
+  let ratings = JSON.parse(localStorage.getItem('ratings')) || [];
+  let count = [0,0,0,0,0,0];
+  ratings.forEach(r => count[r.bintang]++);
+  
+  let html = '';
+  for(let i=5; i>=1; i--){
+    html += `<div class="stat-card"><div class="num">${count[i]}</div><div class="label">${i} ⭐</div></div>`;
+  }
+  document.getElementById('statGrid').innerHTML = html;
+  
+  let ulasanHtml = '';
+  ratings.sort((a,b) => b.bintang - a.bintang).forEach(r => {
+    let stars = '⭐'.repeat(r.bintang);
+    let waktu = new Date(r.waktu).toLocaleString('id-ID');
+    let topClass = r.bintang == 5 ? 'top' : '';
+    let balasanHtml = r.balasan ? `<div class="balasan-owner"><b>👑 Balasan Owner:</b><p>${r.balasan}</p></div>` : '';
+    let replyBox = `<div class="reply-box" id="reply-${r.id}">
+      <textarea placeholder="Tulis balasan..." id="text-${r.id}" rows="2">${r.balasan || ''}</textarea>
+      <button class="btn kecil" onclick="simpanBalasan(${r.id})">Simpan Balasan</button>
+    </div>`;
+    
+    ulasanHtml += `<div class="review-item ${topClass}">
+      <div class="review-stars">${stars}</div>
+      <div class="review-text"><b>${r.nama}:</b> ${r.komentar || '-'}</div>
+      <div class="review-date">${waktu}</div>
+      ${balasanHtml}
+      ${replyBox}
+      <button class="btn kecil" style="margin-top:5px;margin-right:5px" onclick="toggleBalas(${r.id})">Balas</button>
+      <button class="btn kecil danger" style="margin-top:5px" onclick="hapusRating(${r.id})">Hapus</button>
+    </div>`;
+  });
+  document.getElementById('listUlasanOwner').innerHTML = ulasanHtml || '<div style="color:#666;text-align:center;padding:20px">Belum ada ulasan</div>';
+}
+
+function toggleBalas(id){
+  let box = document.getElementById(`reply-${id}`);
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+}
+
+function simpanBalasan(id){
+  let text = document.getElementById(`text-${id}`).value.trim();
+  let ratings = JSON.parse(localStorage.getItem('ratings')) || [];
+  let idx = ratings.findIndex(r => r.id === id);
+  if(idx !== -1){
+    ratings[idx].balasan = text;
+    localStorage.setItem('ratings', JSON.stringify(ratings));
+    alert('✅ Balasan tersimpan!');
+    loadStatistikOwner();
+    updateHasilRating();
+  }
+}
+
+function hapusRating(id){
+  if(confirm('Hapus rating ini?')){
+    let ratings = JSON.parse(localStorage.getItem('ratings')) || [];
+    ratings = ratings.filter(r => r.id !== id);
+    localStorage.setItem('ratings', JSON.stringify(ratings));
+    loadStatistikOwner();
+    updateHasilRating();
+  }
+}
+
+function hapusSemuaRating(){
+  if(confirm('Hapus semua rating?')){
+    localStorage.removeItem('ratings');
+    loadStatistikOwner();
+    updateHasilRating();
+  }
+}
+
+function tampilAkun(){
+  alert(`👤 DATA AKUN KAMU\nNama: ${user.nama}\nWhatsApp: ${user.wa}`);
+}
+
+// EFEK BINTANG JATUH IJO
+const c=document.getElementById('stars'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let s=[];for(let i=0;i<50;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dy:Math.random()*0.5+0.2,dx:Math.random()*0.3-0.15});
+function a(){ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#22c55e';s.forEach(p=>{ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.dy;p.x+=p.dx;if(p.y>c.height){p.y=-10;p.x=Math.random()*c.width}});requestAnimationFrame(a)}
+a();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
+
+updateHasilRating();
+</script>
+</body>
+  </html>
