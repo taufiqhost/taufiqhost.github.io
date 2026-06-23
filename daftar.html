@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar - Taufiq Store</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial;background:#0a0a0a;color:#e5e7eb;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px;overflow:hidden}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+@keyframes fadeInUp{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{text-shadow:0 0 10px #22c55e,0 0 20px #22c55e}50%{text-shadow:0 0 25px #22c55e,0 0 40px #22c55e}}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+.box{background:#111;border:2px solid #22c55e;border-radius:20px;padding:40px;text-align:center;max-width:430px;width:100%;box-shadow:0 0 30px rgba(34,197,94,0.4), inset 0 0 20px rgba(34,197,94,0.1);position:relative;z-index:1;animation:fadeInUp 0.8s ease-out}
+.box::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;background:linear-gradient(45deg,#22c55e,#16a34a,#22c55e);border-radius:20px;z-index:-1;filter:blur(10px);opacity:0.5;animation:spin 3s linear infinite}
+
+/* LOGO RING MUTER KEK LOGIN.HTML */
+.logo-wrap{position:relative;margin:0 auto 20px;width:90px;height:90px}
+.logo-box{width:90px;height:90px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 50%,#22c55e 100%);background-size:200% 200%;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:900;color:#000;animation:spin 4s linear infinite, pulse 2s ease-in-out infinite, glow 2s infinite;box-shadow:0 0 30px rgba(34,197,94,0.8), inset 0 0 20px rgba(255,255,255,0.2)}
+.logo-ring{position:absolute;top:-10px;left:-10px;right:-10px;bottom:-10px;border:2px solid #22c55e;border-radius:50%;animation:spin 6s linear infinite reverse;opacity:0.5}
+.logo-ring2{position:absolute;top:-20px;left:-20px;right:-20px;bottom:-20px;border:1px solid #22c55e;border-radius:50%;animation:spin 8s linear infinite;opacity:0.3}
+
+h1{color:#22c55e;margin-bottom:8px;font-size:28px;font-weight:800;animation:glow 2s infinite}
+.bonus-box{background:linear-gradient(90deg,#fbbf24,#f59e0b,#fbbf24);background-size:200% 200%;color:#000;border-radius:12px;padding:10px;margin:15px 0;font-weight:800;font-size:14px;animation:glow 2s infinite}
+p{color:#9ca3af;font-size:13px;margin-bottom:25px}
+
+input{width:100%;padding:15px;background:#1a1a1a;border:2px solid #333;border-radius:12px;color:#e5e7eb;margin-bottom:14px;font-size:15px;transition:0.3s}
+input:focus{border-color:#22c55e;outline:none;box-shadow:0 0 15px rgba(34,197,94,0.4);transform:scale(1.02)}
+.btn{width:100%;padding:15px;background:linear-gradient(135deg,#22c55e 0%,#16a34a 50%,#22c55e 100%);background-size:200% 200%;color:#000;border:none;border-radius:12px;font-weight:900;font-size:17px;cursor:pointer;margin-top:5px;transition:0.3s;letter-spacing:1px;animation:glow 3s infinite}
+.btn:hover{transform:scale(1.05) translateY(-2px);box-shadow:0 8px 25px rgba(34,197,94,0.6);background-position:right center}
+.success{color:#22c55e;text-align:center;margin-top:10px;display:none;font-size:14px;font-weight:700;animation:fadeInUp 0.3s}
+.link{margin-top:20px;font-size:13px;color:#9ca3af}
+.link a{color:#22c55e;font-weight:800;text-decoration:none;transition:0.3s}
+.link a:hover{text-decoration:underline;text-shadow:0 0 10px #22c55e}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+
+<div class="box">
+<!-- LOGO RING MUTER SAMA KEK LOGIN.HTML -->
+<div class="logo-wrap">
+<div class="logo-ring"></div>
+<div class="logo-ring2"></div>
+<div class="logo-box">TS</div>
+</div>
+
+<h1>DAFTAR GRATIS</h1>
+<div class="bonus-box">🎁 BONUS 5% MEMBER BARU</div>
+<p>Buat akun baru Taufiq Store</p>
+
+<input type="text" id="namaDaftar" placeholder="👤 Nama / Username">
+<input type="password" id="passDaftar" placeholder="🔒 Password min 6 karakter">
+<input type="tel" id="waDaftar" placeholder="📱 WhatsApp 08xxx">
+
+<button class="btn" onclick="daftarAkun()">⚡ DAFTAR SEKARANG</button>
+<div class="success" id="suksesDaftar">✅ Daftar berhasil! Silakan login</div>
+
+<div class="link">Udah punya akun? <a href="login.html">Login disini</a></div>
+</div>
+
+<script>
+if(localStorage.getItem('userLogin')){
+  window.location.replace('index.html');
+}
+
+function daftarAkun(){
+  let nama = document.getElementById('namaDaftar').value.trim();
+  let pass = document.getElementById('passDaftar').value.trim();
+  let wa = document.getElementById('waDaftar').value.trim();
+
+  if(!nama ||!pass ||!wa){alert('Isi semua kolom bang!');return;}
+  if(pass.length < 6){alert('Password minimal 6 karakter!');return;}
+
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+  if(users.find(u => u.nama.toLowerCase() === nama.toLowerCase())){
+    alert('Username udah dipake! Pilih yang lain.');return;
+  }
+
+  let userData = {nama: nama, pass: pass, wa: wa};
+  users.push(userData);
+  localStorage.setItem('users', JSON.stringify(users));
+
+  document.getElementById('suksesDaftar').style.display = 'block';
+  document.getElementById('namaDaftar').value = '';
+  document.getElementById('passDaftar').value = '';
+  document.getElementById('waDaftar').value = '';
+  document.querySelector('.btn').innerText = '✅ BERHASIL DAFTAR';
+  document.querySelector('.btn').disabled = true;
+  document.querySelector('.btn').style.background = 'linear-gradient(135deg,#10b981,#059669)';
+}
+
+// PARTICLE BINTANG JATUH SAMA KEK LOGIN
+const c=document.getElementById('particles'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+let p=[];for(let i=0;i<100;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+0.5,dy:Math.random()*0.8+0.3,dx:Math.random()*0.6-0.3,op:Math.random()*0.5+0.3});
+function anim(){ctx.clearRect(0,0,c.width,c.height);p.forEach(pt=>{ctx.fillStyle='#22c55e';ctx.globalAlpha=pt.op;ctx.beginPath();ctx.arc(pt.x,pt.y,pt.r,0,Math.PI*2);ctx.fill();pt.y+=pt.dy;pt.x+=pt.dx;if(pt.y>c.height){pt.y=-10;pt.x=Math.random()*c.width}});requestAnimationFrame(anim)}
+anim();addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
+</script>
+</body>
+  </html>
